@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promiseedee Interior Design - Luxury E-Commerce & Services</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            500: '#ff6b00',
+                            600: '#e65100',
+                            700: '#c2410c',
+                        },
+                        charcoal: '#1a1a1a',
+                        softbg: '#f8f9fa'
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ff6b00;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #e65100;
+        }
+        .bg-pattern {
+            background-image: radial-gradient(#ff6b00 0.5px, transparent 0.5px);
+            background-size: 24px 24px;
+            opacity: 0.05;
+        }
+    </style>
+</head>
+<body class="bg-white text-charcoal flex flex-col min-h-screen">
+
+    <!-- TOP ANNOUNCEMENT BAR -->
+    <div class="bg-charcoal text-white text-[11px] sm:text-sm py-2 px-4 text-center font-medium flex flex-col sm:flex-row justify-between items-center gap-1">
+        <span class="hidden md:inline"><i class="fa-solid fa-truck-fast text-brand-500 mr-2"></i> Nationwide Delivery Available Across Nigeria</span>
+        <span class="mx-auto">✨ Luxury Interior Design, POP Ceilings, Paints & Furnishings</span>
+        <a href="https://wa.me/2348107974034" target="_blank" class="hidden md:flex items-center text-brand-500 hover:text-white transition">
+            <i class="fa-brands fa-whatsapp mr-1"></i> Direct Hotline: +234 810 797 4034
+        </a>
+    </div>
+
+    <!-- MAIN HEADER & NAVIGATION -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20 gap-2">
+                
+                <!-- Logo -->
+                <div class="flex items-center gap-2 sm:gap-3 cursor-pointer shrink-0" onclick="filterByCategory('all')">
+                    <div class="w-10 h-10 sm:w-11 sm:h-11 bg-brand-500 rounded-xl flex items-center justify-center text-white font-black text-xl sm:text-2xl shadow-lg shadow-brand-500/30">
+                        P
+                    </div>
+                    <div>
+                        <span class="text-lg sm:text-2xl font-black tracking-tight text-charcoal block leading-none">
+                            PROMISEEDEE
+                        </span>
+                        <span class="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-brand-500 block mt-1">
+                            Interior Design
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Search Bar (Desktop) -->
+                <div class="hidden lg:flex flex-1 max-w-md mx-8 relative">
+                    <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Search furniture, lights, paints, curtains..." 
+                           class="w-full bg-gray-50 border border-gray-200 rounded-full py-2.5 pl-11 pr-4 text-sm focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 transition">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-gray-400"></i>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-2 sm:gap-4 shrink-0">
+                    <button onclick="toggleServiceModal()" class="hidden sm:flex items-center gap-2 bg-charcoal hover:bg-brand-500 text-white px-4 py-2.5 rounded-full text-sm font-semibold transition shadow-md">
+                        <i class="fa-solid fa-compass-drafting text-brand-500"></i>
+                        <span>Book Service</span>
+                    </button>
+
+                    <!-- Cart Toggle Button -->
+                    <button onclick="toggleCartDrawer()" class="relative bg-brand-50 hover:bg-brand-100 text-brand-600 p-2.5 sm:p-3 rounded-full transition">
+                        <i class="fa-solid fa-bag-shopping text-lg sm:text-xl"></i>
+                        <span id="cartBadge" class="absolute -top-1 -right-1 bg-brand-500 text-white text-[10px] sm:text-xs font-extrabold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow">
+                            0
+                        </span>
+                    </button>
+
+                    <!-- Mobile Menu Button -->
+                    <button onclick="toggleMobileMenu()" class="lg:hidden text-charcoal text-2xl p-1 focus:outline-none">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Search Bar -->
+            <div class="pb-3 lg:hidden">
+                <div class="relative">
+                    <input type="text" id="mobileSearchInput" oninput="handleMobileSearch()" placeholder="Search catalog..." 
+                           class="w-full bg-gray-50 border border-gray-200 rounded-full py-2 pl-10 pr-4 text-xs sm:text-sm focus:outline-none focus:border-brand-500">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-b border-gray-200 px-6 py-4 space-y-3 shadow-xl">
+            <a href="#hero" onclick="toggleMobileMenu()" class="block font-semibold py-2 text-charcoal hover:text-brand-500 border-b border-gray-100">Home</a>
+            <a href="#catalog" onclick="toggleMobileMenu()" class="block font-semibold py-2 text-charcoal hover:text-brand-500 border-b border-gray-100">All Products & Categories</a>
+            <a href="#paints" onclick="toggleMobileMenu()" class="block font-semibold py-2 text-charcoal hover:text-brand-500 border-b border-gray-100">Promise Eedee Paints</a>
+            <a href="#services" onclick="toggleMobileMenu()" class="block font-semibold py-2 text-charcoal hover:text-brand-500 border-b border-gray-100">Interior Design Services</a>
+            <button onclick="toggleMobileMenu(); toggleServiceModal();" class="w-full bg-brand-500 text-white font-bold py-3 px-4 rounded-xl shadow-md text-center mt-2">
+                <i class="fa-solid fa-calendar-check mr-2"></i> Book Consultation
+            </button>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="relative bg-gradient-to-br from-gray-900 via-charcoal to-black text-white overflow-hidden py-12 lg:py-24">
+        <div class="absolute inset-0 bg-pattern"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                <div class="space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 bg-brand-500/20 border border-brand-500/40 text-brand-500 px-4 py-1.5 rounded-full text-xs font-bold uppercase">
+                        <i class="fa-solid fa-crown text-amber-400"></i> Premium Interior Solutions & Decor
+                    </div>
+                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight sm:leading-none">
+                        Elevate Your Space with <span class="text-brand-500">Promiseedee</span> Design
+                    </h1>
+                    <p class="text-gray-300 text-sm sm:text-lg max-w-xl mx-auto lg:mx-0 font-normal">
+                        Your one-stop destination for luxury furniture, custom POP ceilings, Promise Eedee premium paints, smart lighting, and full-scale interior transformation.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start pt-2">
+                        <a href="#catalog" class="bg-brand-500 hover:bg-brand-600 text-white font-bold px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl shadow-lg shadow-brand-500/30 transition text-center flex items-center justify-center gap-2 text-sm sm:text-base">
+                            <span>Explore Store</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                        <button onclick="toggleServiceModal()" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl backdrop-blur-sm transition text-center text-sm sm:text-base">
+                            Request 3D Consultation
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-2 sm:gap-4 pt-6 border-t border-white/10 max-w-lg mx-auto lg:mx-0">
+                        <div>
+                            <p class="text-xl sm:text-3xl font-black text-brand-500">100%</p>
+                            <p class="text-[10px] sm:text-xs text-gray-400 mt-1">Quality Guaranteed</p>
+                        </div>
+                        <div>
+                            <p class="text-xl sm:text-3xl font-black text-white">150+</p>
+                            <p class="text-[10px] sm:text-xs text-gray-400 mt-1">Completed Projects</p>
+                        </div>
+                        <div>
+                            <p class="text-xl sm:text-3xl font-black text-brand-500">Direct</p>
+                            <p class="text-[10px] sm:text-xs text-gray-400 mt-1">WhatsApp Checkout</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative px-2 sm:px-0">
+                    <div class="relative mx-auto max-w-md lg:max-w-none rounded-3xl overflow-hidden shadow-2xl border-4 border-white/10 bg-gray-800">
+                        <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1000&q=80" 
+                             alt="Luxury Living Room Interior" 
+                             class="w-full h-[320px] sm:h-[400px] lg:h-[500px] object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-5 sm:p-6">
+                            <span class="bg-brand-500 text-white text-[10px] sm:text-xs font-bold uppercase px-3 py-1 rounded-full w-max mb-2">Featured Project</span>
+                            <h3 class="text-white font-bold text-base sm:text-xl">Modern Living Room & POP Ceiling Concept</h3>
+                            <p class="text-gray-300 text-[11px] sm:text-xs mt-1">Designed & Executed by Promiseedee Team</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CATALOG SECTION -->
+    <section id="catalog" class="py-12 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex-1 w-full">
+        <div class="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
+            <h2 class="text-2xl sm:text-4xl font-extrabold text-charcoal">Explore Our Collections</h2>
+            <p class="text-gray-500 mt-2 text-xs sm:text-base px-2">Browse through our vast catalog of luxury furniture, ceiling finishing materials, custom paints, and interior accessories.</p>
+        </div>
+
+        <div class="flex items-center gap-2 overflow-x-auto pb-4 mb-8 no-scrollbar scroll-smooth px-1" id="categoryBar"></div>
+
+        <div id="productsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6"></div>
+
+        <div id="emptyState" class="hidden py-16 text-center">
+            <i class="fa-solid fa-box-open text-5xl text-gray-300 mb-4 block"></i>
+            <h3 class="text-lg font-bold text-gray-600">No items found matching your filter</h3>
+            <p class="text-gray-400 text-sm mt-1">Try switching categories or clearing your search term.</p>
+            <button onclick="filterByCategory('all')" class="mt-4 bg-brand-500 text-white px-5 py-2 rounded-xl font-semibold text-sm">
+                Show All Products
+            </button>
+        </div>
+    </section>
+
+    <!-- PAINTS BANNER -->
+    <section id="paints" class="bg-gradient-to-r from-orange-600 to-brand-500 text-white py-12 sm:py-16 my-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div class="space-y-4">
+                    <span class="bg-white/20 text-white font-bold text-xs uppercase px-3 py-1 rounded-full">Signature Brand</span>
+                    <h2 class="text-2xl sm:text-4xl font-black">Promise Eedee Paints & Wall Primers</h2>
+                    <p class="text-orange-100 leading-relaxed text-xs sm:text-base">
+                        Engineered for superior durability, rich pigmentation, and weather resilience. Choose from Premium Matt, Gloss, Silk Emulsions, and professional weather-resistant exterior coats.
+                    </p>
+                    <ul class="space-y-2 text-xs sm:text-sm font-semibold text-white/90">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-amber-300"></i> High Coverage & Long-lasting Colors</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-amber-300"></i> Washable & Stain Resistant Formula</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-amber-300"></i> Interior Primers & Exterior Weather Guard</li>
+                    </ul>
+                    <button onclick="filterByCategory('paints')" class="bg-white text-brand-600 hover:bg-charcoal hover:text-white font-bold px-6 py-3 rounded-xl transition shadow-lg mt-2 inline-block text-xs sm:text-sm">
+                        Shop Paint Range
+                    </button>
+                </div>
+                <div class="grid grid-cols-2 gap-3 sm:gap-4">
+                    <div class="bg-white/10 p-4 sm:p-6 rounded-2xl backdrop-blur-md border border-white/20 text-center">
+                        <i class="fa-solid fa-paint-roller text-3xl sm:text-4xl text-amber-300 mb-2 sm:mb-3"></i>
+                        <h4 class="font-bold text-sm sm:text-lg">Silk Emulsion</h4>
+                        <p class="text-[11px] sm:text-xs text-orange-100 mt-1">Silky smooth luxury finish for living spaces.</p>
+                    </div>
+                    <div class="bg-white/10 p-4 sm:p-6 rounded-2xl backdrop-blur-md border border-white/20 text-center">
+                        <i class="fa-solid fa-shield-halved text-3xl sm:text-4xl text-amber-300 mb-2 sm:mb-3"></i>
+                        <h4 class="font-bold text-sm sm:text-lg">Weather-Proof</h4>
+                        <p class="text-[11px] sm:text-xs text-orange-100 mt-1">Extreme exterior protection against sun and heavy rain.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section id="services" class="py-12 sm:py-16 bg-softbg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
+                <span class="text-brand-500 font-bold uppercase tracking-wider text-xs">Turnkey Design Solutions</span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-charcoal mt-1">Professional Interior Design Services</h2>
+                <p class="text-gray-500 mt-2 text-xs sm:text-base px-2">From conceptual 3D visualizations to POP ceiling installations and complete renovation works.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8" id="servicesGrid"></div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-charcoal text-white pt-12 sm:pt-16 pb-8 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 mb-10 sm:mb-12">
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-brand-500 rounded-xl flex items-center justify-center text-white font-black text-xl">
+                            P
+                        </div>
+                        <span class="text-xl font-black text-white">PROMISEEDEE</span>
+                    </div>
+                    <p class="text-gray-400 text-xs sm:text-sm leading-relaxed">
+                        Transforming residential, commercial, and outdoor spaces with bespoke furniture, custom ceilings, and high-quality paint products.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold text-sm sm:text-base mb-3 sm:mb-4 border-l-4 border-brand-500 pl-3">Popular Categories</h4>
+                    <ul class="space-y-2 text-xs sm:text-sm text-gray-400">
+                        <li><a href="#catalog" onclick="filterByCategory('furniture')" class="hover:text-brand-500 transition">Luxury Sofa Sets & Tables</a></li>
+                        <li><a href="#catalog" onclick="filterByCategory('lighting')" class="hover:text-brand-500 transition">Modern Chandeliers & Lighting</a></li>
+                        <li><a href="#catalog" onclick="filterByCategory('paints')" class="hover:text-brand-500 transition">Promise Eedee Paints</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold text-sm sm:text-base mb-3 sm:mb-4 border-l-4 border-brand-500 pl-3">Design Services</h4>
+                    <ul class="space-y-2 text-xs sm:text-sm text-gray-400">
+                        <li><a href="#services" class="hover:text-brand-500 transition">Full Interior Design Service</a></li>
+                        <li><a href="#services" class="hover:text-brand-500 transition">POP Ceiling Design & Installation</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold text-sm sm:text-base mb-3 sm:mb-4 border-l-4 border-brand-500 pl-3">Contact Vendor</h4>
+                    <ul class="space-y-3 text-xs sm:text-sm text-gray-400">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-phone text-brand-500 mt-1"></i>
+                            <span>+234 810 797 4034</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-gray-800 text-center text-xs text-gray-500 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <p>&copy; 2026 Promiseedee Interior Design. All rights reserved.</p>
+                <div class="flex flex-wrap justify-center gap-4 items-center">
+                    <a href="#" class="hover:underline">Privacy Policy</a>
+                    <a href="#" class="hover:underline">Terms of Service</a>
+                    <a href="/admin" target="_blank" class="text-brand-500 hover:text-white font-bold transition flex items-center gap-1 bg-white/5 px-2.5 py-1 rounded-md">
+                        <i class="fa-solid fa-lock text-[10px]"></i> Admin Portal
+                    </a>
+                    <a href="https://wa.me/2348107974034" class="hover:underline text-brand-500">Order Hotline</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SHOPPING CART DRAWER -->
+    <div id="cartOverlay" class="fixed inset-0 bg-black/60 z-50 opacity-0 pointer-events-none transition-opacity duration-300" onclick="toggleCartDrawer()"></div>
+    <div id="cartDrawer" class="fixed top-0 right-0 h-full w-full sm:max-w-md bg-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="p-4 sm:p-5 bg-charcoal text-white flex items-center justify-between border-b border-gray-800">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-bag-shopping text-brand-500 text-lg sm:text-xl"></i>
+                <h3 class="font-bold text-base sm:text-lg">Your Cart</h3>
+                <span id="drawerItemCount" class="bg-brand-500 text-white text-xs px-2 py-0.5 rounded-full font-bold">0</span>
+            </div>
+            <button onclick="toggleCartDrawer()" class="text-gray-400 hover:text-white text-xl p-2">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-4 sm:p-5 space-y-3 sm:space-y-4"></div>
+
+        <div class="p-4 sm:p-5 border-t border-gray-200 bg-gray-50 space-y-3 sm:space-y-4">
+            <div class="space-y-2">
+                <div class="flex justify-between text-xs sm:text-sm text-gray-600">
+                    <span>Subtotal</span>
+                    <span id="cartSubtotal" class="font-semibold text-charcoal">₦0.00</span>
+                </div>
+                <div class="flex justify-between text-base sm:text-lg font-black text-charcoal border-t border-gray-200 pt-2">
+                    <span>Total</span>
+                    <span id="cartTotal" class="text-brand-600">₦0.00</span>
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <input type="text" id="customerName" placeholder="Your Full Name *" class="w-full text-xs p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-brand-500">
+                <input type="text" id="customerAddress" placeholder="Delivery Address / City *" class="w-full text-xs p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-brand-500">
+                <textarea id="customerNotes" placeholder="Additional notes or specifications..." rows="2" class="w-full text-xs p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-brand-500 resize-none"></textarea>
+            </div>
+
+            <button onclick="checkoutViaWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/25 text-xs sm:text-sm">
+                <i class="fa-brands fa-whatsapp text-lg sm:text-xl"></i>
+                <span>Checkout & Save to Database</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- SERVICE CONSULTATION MODAL -->
+    <div id="serviceModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-3 sm:p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl p-5 sm:p-8 relative">
+            <button onclick="toggleServiceModal()" class="absolute top-4 right-4 text-gray-400 hover:text-charcoal text-xl p-2">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center mb-5 sm:mb-6">
+                <div class="w-12 h-12 bg-brand-100 text-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl">
+                    <i class="fa-solid fa-compass-drafting"></i>
+                </div>
+                <h3 class="text-xl sm:text-2xl font-bold text-charcoal">Book Interior Consultation</h3>
+                <p class="text-xs text-gray-500 mt-1">Specify your project details to save your booking and launch WhatsApp.</p>
+            </div>
+
+            <form onsubmit="submitServiceBooking(event)" class="space-y-3 sm:space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Service Type</label>
+                    <select id="bookingServiceType" class="w-full text-xs sm:text-sm border border-gray-300 rounded-xl p-3 focus:outline-none focus:border-brand-500">
+                        <option value="Full Interior Design Service">Full Interior Design Service</option>
+                        <option value="3D Interior Visualization">3D Interior Visualization</option>
+                        <option value="POP Ceiling Design & Installation">POP Ceiling Design & Installation</option>
+                        <option value="Living Room / Bedroom / Kitchen Design">Room Design (Living/Bed/Kitchen)</option>
+                        <option value="Professional Painting Services">Professional Painting Services</option>
+                        <option value="Exterior Colour & Renovation">Exterior Consultation & Renovation</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Your Full Name</label>
+                    <input type="text" id="bookingName" required placeholder="e.g. Mr. Chinedu Okafor" class="w-full text-xs sm:text-sm border border-gray-300 rounded-xl p-3 focus:outline-none focus:border-brand-500">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">Phone Number *</label>
+                        <input type="tel" id="bookingPhone" required placeholder="e.g. 08012345678" class="w-full text-xs sm:text-sm border border-gray-300 rounded-xl p-3 focus:outline-none focus:border-brand-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">Email Address</label>
+                        <input type="email" id="bookingEmail" placeholder="e.g. chinedu@example.com" class="w-full text-xs sm:text-sm border border-gray-300 rounded-xl p-3 focus:outline-none focus:border-brand-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Location / City</label>
+                    <input type="text" id="bookingLocation" required placeholder="e.g. Lekki, Lagos or Abuja" class="w-full text-xs sm:text-sm border border-gray-300 rounded-xl p-3 focus:outline-none focus:border-brand-500">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Project Details / Scope</label>
+                    <textarea id="bookingDetails" rows="2" placeholder="Describe room size, timeline, special requests..." class="w-full text-xs sm:text-sm border border-gray-300 rounded-xl p-3 focus:outline-none focus:border-brand-500 resize-none"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-3.5 rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-brand-500/20 text-xs sm:text-sm">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    <span>Save Booking & Launch WhatsApp</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        let CATALOG = [];
+        let CATEGORIES = [
+            { id: 'all', name: 'All Products', icon: 'fa-cubes' },
+            { id: 'furniture', name: 'Furniture', icon: 'fa-couch' },
+            { id: 'lighting', name: 'Lighting', icon: 'fa-lightbulb' },
+            { id: 'curtains', name: 'Curtains & Blinds', icon: 'fa-scroll' },
+            { id: 'rugs', name: 'Rugs & Flooring', icon: 'fa-rug' },
+            { id: 'walldecor', name: 'Wall Decor', icon: 'fa-border-all' },
+            { id: 'pop', name: 'POP Ceilings', icon: 'fa-hammer' },
+            { id: 'paints', name: 'Promise Eedee Paints', icon: 'fa-paint-roller' },
+            { id: 'bedding', name: 'Bedding', icon: 'fa-bed' },
+            { id: 'kitchenbath', name: 'Kitchen & Bath', icon: 'fa-sink' },
+            { id: 'affiliate', name: 'Smart Deals', icon: 'fa-tags' }
+        ];
+
+        let SERVICES = [
+            { title: 'Full Interior Design Service', desc: 'Complete end-to-end interior planning, furniture arrangement, and spatial styling.', icon: 'fa-house-chimney-window' },
+            { title: '3D Interior Visualization', desc: 'Photorealistic 3D architectural renders of your space before purchasing materials.', icon: 'fa-cubes-stacked' },
+            { title: 'POP Ceiling Design & Installation', desc: 'Bespoke POP cornices, ceiling access panels, LED troughs, and modern designs.', icon: 'fa-layer-group' },
+            { title: 'Living Room & Bedroom Design', desc: 'Tailored luxury lounge setup, wall paneling, acoustic panels, and mood lighting.', icon: 'fa-couch' },
+            { title: 'Professional Painting Services', desc: 'Expert application of Promise Eedee paints, primers, and exterior weather coats.', icon: 'fa-paint-roller' },
+            { title: 'Renovation & Colour Consultation', desc: 'On-site technical consultation, material sourcing, and maintenance works.', icon: 'fa-palette' }
+        ];
+
+        let activeCategory = 'all';
+        let searchQuery = '';
+        let cart = [];
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            await fetchCatalogData();
+            renderCategoryBar();
+            renderProducts();
+            renderServices();
+            updateCartUI();
+        });
+
+        async function fetchCatalogData() {
+            try {
+                const response = await fetch('/api/products');
+                const result = await response.json();
+                if (result.success) {
+                    CATALOG = result.data;
+                }
+            } catch (err) {
+                console.error('Failed to load products from server:', err);
+            }
+        }
+
+        function renderCategoryBar() {
+            const container = document.getElementById('categoryBar');
+            container.innerHTML = CATEGORIES.map(cat => `
+                <button onclick="filterByCategory('${cat.id}')" 
+                        class="px-4 py-2.5 rounded-full text-xs font-bold whitespace-nowrap transition-all flex items-center gap-2 border ${
+                            activeCategory === cat.id 
+                            ? 'bg-brand-500 text-white border-brand-500 shadow-md shadow-brand-500/20' 
+                            : 'bg-white text-gray-700 border-gray-200 hover:border-brand-500 hover:text-brand-500'
+                        }">
+                    <i class="fa-solid ${cat.icon}"></i>
+                    <span>${cat.name}</span>
+                </button>
+            `).join('');
+        }
+
+        function filterByCategory(catId) {
+            activeCategory = catId;
+            renderCategoryBar();
+            renderProducts();
+        }
+
+        function handleSearch() {
+            searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
+            renderProducts();
+        }
+
+        function handleMobileSearch() {
+            searchQuery = document.getElementById('mobileSearchInput').value.toLowerCase().trim();
+            renderProducts();
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            const emptyState = document.getElementById('emptyState');
+
+            let filtered = CATALOG.filter(item => {
+                const matchesCat = activeCategory === 'all' || item.category === activeCategory;
+                const matchesSearch = item.name.toLowerCase().includes(searchQuery);
+                return matchesCat && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            grid.innerHTML = filtered.map(product => `
+                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col group">
+                    <div class="relative h-36 sm:h-48 bg-gray-100 overflow-hidden">
+                        <img src="${product.img}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-2 left-2 sm:top-3 sm:left-3 bg-white/95 backdrop-blur-md text-charcoal text-[9px] sm:text-[10px] font-extrabold uppercase px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md shadow-sm">
+                            ${product.category}
+                        </span>
+                    </div>
+                    <div class="p-3 sm:p-4 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-gray-800 text-xs sm:text-sm leading-snug group-hover:text-brand-500 transition line-clamp-2">
+                                ${product.name}
+                            </h3>
+                        </div>
+                        <div class="mt-3 pt-2.5 border-t border-gray-100 flex items-center justify-between">
+                            <div>
+                                <span class="text-[10px] text-gray-400 block font-medium">Price</span>
+                                <span class="font-black text-brand-600 text-xs sm:text-base">₦${product.price.toLocaleString()}</span>
+                            </div>
+                            <button onclick="addToCart('${product.id}')" class="bg-brand-50 hover:bg-brand-500 text-brand-600 hover:text-white p-2 sm:p-2.5 rounded-xl transition-all shadow-sm">
+                                <i class="fa-solid fa-cart-plus text-sm sm:text-base"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderServices() {
+            const container = document.getElementById('servicesGrid');
+            container.innerHTML = SERVICES.map(srv => `
+                <div class="bg-white p-5 sm:p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-brand-50 rounded-2xl flex items-center justify-center text-brand-500 text-2xl mb-4">
+                        <i class="fa-solid ${srv.icon}"></i>
+                    </div>
+                    <h3 class="font-bold text-base sm:text-lg text-charcoal mb-2">${srv.title}</h3>
+                    <p class="text-gray-500 text-xs leading-relaxed mb-4">${srv.desc}</p>
+                    <button onclick="openSpecificServiceBooking('${srv.title}')" class="text-brand-500 font-bold text-xs hover:underline flex items-center gap-1">
+                        <span>Request Service</span>
+                        <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function addToCart(productId) {
+            const product = CATALOG.find(p => p.id === productId);
+            if (!product) return;
+
+            const existing = cart.find(item => item.id === productId);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+
+            updateCartUI();
+            toggleCartDrawer(true);
+        }
+
+        function updateQuantity(productId, delta) {
+            const item = cart.find(i => i.id === productId);
+            if (item) {
+                item.qty += delta;
+                if (item.qty <= 0) {
+                    cart = cart.filter(i => i.id !== productId);
+                }
+            }
+            updateCartUI();
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(i => i.id !== productId);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+            document.getElementById('cartBadge').innerText = totalItems;
+            document.getElementById('drawerItemCount').innerText = totalItems;
+            document.getElementById('cartSubtotal').innerText = `₦${subtotal.toLocaleString()}`;
+            document.getElementById('cartTotal').innerText = `₦${subtotal.toLocaleString()}`;
+
+            const container = document.getElementById('cartItemsContainer');
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fa-solid fa-basket-shopping text-4xl text-gray-300 mb-2"></i>
+                        <p class="text-gray-500 font-bold text-sm">Your cart is currently empty</p>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = cart.map(item => `
+                    <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl border border-gray-100">
+                        <img src="${item.img}" alt="${item.name}" class="w-12 h-12 sm:w-14 sm:h-14 object-cover rounded-lg bg-gray-200">
+                        <div class="flex-1">
+                            <h4 class="text-xs font-bold text-charcoal line-clamp-1">${item.name}</h4>
+                            <span class="text-xs font-black text-brand-600 block mt-0.5">₦${(item.price * item.qty).toLocaleString()}</span>
+                            <div class="flex items-center gap-2 mt-2">
+                                <button onclick="updateQuantity('${item.id}', -1)" class="w-6 h-6 bg-white border border-gray-300 rounded text-xs font-bold">-</button>
+                                <span class="text-xs font-bold text-charcoal">${item.qty}</span>
+                                <button onclick="updateQuantity('${item.id}', 1)" class="w-6 h-6 bg-white border border-gray-300 rounded text-xs font-bold">+</button>
+                            </div>
+                        </div>
+                        <button onclick="removeFromCart('${item.id}')" class="text-gray-400 hover:text-red-500 p-1 text-sm">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function toggleCartDrawer(forceOpen = false) {
+            const drawer = document.getElementById('cartDrawer');
+            const overlay = document.getElementById('cartOverlay');
+
+            if (forceOpen || drawer.classList.contains('translate-x-full')) {
+                drawer.classList.remove('translate-x-full');
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+            } else {
+                drawer.classList.add('translate-x-full');
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        }
+
+        async function checkoutViaWhatsApp() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+
+            const customerName = document.getElementById('customerName').value.trim();
+            const address = document.getElementById('customerAddress').value.trim();
+            const notes = document.getElementById('customerNotes').value.trim();
+
+            if (!customerName || !address) {
+                alert('Please enter your Name and Delivery Address/City.');
+                return;
+            }
+
+            const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+            try {
+                const response = await fetch('/api/orders', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        customerName,
+                        address,
+                        notes,
+                        items: cart,
+                        totalAmount
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success && result.whatsappUrl) {
+                    window.open(result.whatsappUrl, '_blank');
+                    cart = [];
+                    updateCartUI();
+                    toggleCartDrawer();
+                } else {
+                    alert('Error saving order: ' + (result.message || 'Server error'));
+                }
+            } catch (error) {
+                console.error('Order submission error:', error);
+                alert('Unable to reach server.');
+            }
+        }
+
+        function toggleServiceModal() {
+            document.getElementById('serviceModal').classList.toggle('hidden');
+        }
+
+        function openSpecificServiceBooking(serviceTitle) {
+            document.getElementById('bookingServiceType').value = serviceTitle;
+            toggleServiceModal();
+        }
+
+        async function submitServiceBooking(e) {
+            e.preventDefault();
+
+            const serviceType = document.getElementById('bookingServiceType').value;
+            const name = document.getElementById('bookingName').value.trim();
+            const phone = document.getElementById('bookingPhone').value.trim();
+            const email = document.getElementById('bookingEmail').value.trim() || 'Not provided';
+            const location = document.getElementById('bookingLocation').value.trim();
+            const details = document.getElementById('bookingDetails').value.trim();
+
+            if (!serviceType || !name || !phone || !location) {
+                alert('Please fill out all required fields.');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/consultations', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        serviceType,
+                        name,
+                        phone,
+                        email,
+                        location,
+                        details
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success && result.whatsappUrl) {
+                    window.open(result.whatsappUrl, '_blank');
+                    toggleServiceModal();
+                } else {
+                    alert('Error saving booking: ' + (result.message || 'Server error'));
+                }
+            } catch (error) {
+                console.error('Booking submission error:', error);
+                alert('Unable to reach server.');
+            }
+        }
+    </script>
+</body>
+</html>
